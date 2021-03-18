@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleList
+namespace List
 {
     public class ArrayList
     {
@@ -28,8 +28,17 @@ namespace ConsoleList
         public ArrayList(int[] value)
         {
             Length = value.Length;
-            _array = new int[value.Length + 10];
             _array = value;
+        }
+
+        public override string ToString()
+        {
+            string s = "";
+            for (int i=0; i < Length; i++)
+            {
+                s += _array[i] + " ";
+            }
+            return s;
         }
 
         //1. метод добавление значения в конец
@@ -86,7 +95,7 @@ namespace ConsoleList
         //5. метод удаление из начала одного элемента
         public void RemoveOneElementFromTheBegin()
         {
-            for (int i = 0; i < Length; i++)
+            for (int i = 0; i < Length-1; i++)
             {
                 _array[i] = _array[i + 1];
             }
@@ -100,11 +109,11 @@ namespace ConsoleList
         //6. метод удаление по индексу одного элемента
         public void RemoveOneElementByIndex(int index)
         {
-            if (index > _array.Length)
+            if (index > Length)
             {
                 throw new IndexOutOfRangeException();
             }
-            for (int i = index; i < Length; i++)
+            for (int i = index; i < Length-1; i++)
             {
                 _array[i] = _array[i + 1];
             }
@@ -118,18 +127,11 @@ namespace ConsoleList
         //7. удаление из конца N элементов
         public void RemoveNElementsFromTheEnd(int n)
         {
-
             if (n > Length)
             {
                 throw new IndexOutOfRangeException();
             }
             Length -= n;
-            int[] tmpArray = new int[Length];
-            for (int i = 0; i < Length; i++)
-            {
-                tmpArray[i] = _array[i];
-            }
-            _array = tmpArray;
             if (Length <= (_array.Length / 2))
             {
                 DownSize();
@@ -142,14 +144,12 @@ namespace ConsoleList
             if (n > Length)
             {
                 throw new IndexOutOfRangeException();
+            }            
+            for (int i = 0; i < Length - n; i++)
+            {
+                _array[i] = _array[n + i];
             }
             Length -= n;
-            int[] tmpArray = new int[Length];
-            for (int i = Length; i < _array.Length; i++)
-            {
-                tmpArray[i] = _array[i];
-            }
-            _array = tmpArray;
             if (Length <= (_array.Length / 2))
             {
                 DownSize();
@@ -163,11 +163,11 @@ namespace ConsoleList
             {
                 throw new IndexOutOfRangeException();
             }
-            for (int i = index; i < Length; i++)
+            for (int i = index; (i+n) < Length; i++)
             {
                 _array[i] = _array[i + n];
             }
-            Length--;
+            Length -= n;
             if (Length <= (_array.Length / 2))
             {
                 DownSize();
@@ -207,12 +207,13 @@ namespace ConsoleList
         //14. метод реверс (123 -> 321)
         public void Revers()
         {
-            int tmp;
+            //int tmp;
             for (int i = 0; i < Length / 2; i++)
             {
+                int tmp;
                 tmp = _array[i];
-                _array[i] = _array[Length / 2 - i - 1];
-                _array[Length / 2 - i - 1] = tmp;
+                _array[i] = _array[Length - i -1];
+                _array[Length - i-1 ] = tmp;
             }
         }
 
@@ -265,7 +266,7 @@ namespace ConsoleList
             int min = _array[0], indexMin = 0;
             for (int i = 1; i < Length; i++)
             {
-                if (min < _array[i])
+                if (min > _array[i])
                 {
                     min = _array[i];
                     indexMin = i;
@@ -325,7 +326,10 @@ namespace ConsoleList
         {
             for (int i = 0; i < Length; i++)
             {
-                RemoveOneElementByIndex(GetIndexByValue(value));
+                if (_array[i] == value)
+                {
+                    RemoveOneElementByIndex(i);
+                }
             }
         }
 

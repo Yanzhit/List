@@ -4,9 +4,12 @@ namespace List
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            ArrayList arrList = new ArrayList(new int[] { 1, 2, 3, 4, 5 });
+            Console.WriteLine(arrList);
+            arrList.Revers();
+            Console.WriteLine(arrList);
         }
     }
 }
