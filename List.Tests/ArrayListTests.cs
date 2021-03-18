@@ -7,9 +7,25 @@ namespace List.Tests
     {
         //1.  добавление значения в конец
         [TestCase(8, "1 2 3 4 5 8 ")]
-        public void AddValueToTheEndTest(int value, string expected)
+        public void AddValueToTheEndTest1(int value, string expected)
         {
             ArrayList arrList = new ArrayList(new int[] { 1, 2, 3, 4, 5 });
+            arrList.AddValueToTheEnd(value);
+            string actual = arrList.ToString();
+            Assert.AreEqual(expected, actual);
+        }
+        [TestCase(8, "8 ")]
+        public void AddValueToTheEndTest2(int value, string expected)
+        {
+            ArrayList arrList = new ArrayList();
+            arrList.AddValueToTheEnd(value);
+            string actual = arrList.ToString();
+            Assert.AreEqual(expected, actual);
+        }
+        [TestCase(8, "2 8 ")]
+        public void AddValueToTheEndTest3(int value, string expected)
+        {
+            ArrayList arrList = new ArrayList(2);
             arrList.AddValueToTheEnd(value);
             string actual = arrList.ToString();
             Assert.AreEqual(expected, actual);
@@ -17,9 +33,25 @@ namespace List.Tests
 
         //2.  добавление значения в начало
         [TestCase(8, "8 1 2 3 4 5 ")]
-        public void AddValueToTheBeginTest(int value, string expected)
+        public void AddValueToTheBeginTest1(int value, string expected)
         {
             ArrayList arrList = new ArrayList(new int[] { 1, 2, 3, 4, 5 });
+            arrList.AddValueToTheBegin(value);
+            string actual = arrList.ToString();
+            Assert.AreEqual(expected, actual);
+        }
+        [TestCase(8, "8 ")]
+        public void AddValueToTheBeginTest2(int value, string expected)
+        {
+            ArrayList arrList = new ArrayList();
+            arrList.AddValueToTheBegin(value);
+            string actual = arrList.ToString();
+            Assert.AreEqual(expected, actual);
+        }
+        [TestCase(8, "8 5 ")]
+        public void AddValueToTheBeginTest3(int value, string expected)
+        {
+            ArrayList arrList = new ArrayList(5);
             arrList.AddValueToTheBegin(value);
             string actual = arrList.ToString();
             Assert.AreEqual(expected, actual);
@@ -27,9 +59,25 @@ namespace List.Tests
 
         //3.  добавление значения по индексу
         [TestCase(8, 3, "1 2 3 8 4 5 ")]
-        public void AddValueByIndexTest(int value, int index, string expected)
+        public void AddValueByIndexTest1(int value, int index, string expected)
         {
             ArrayList arrList = new ArrayList(new int[] { 1, 2, 3, 4, 5 });
+            arrList.AddValueByIndex(value, index);
+            string actual = arrList.ToString();
+            Assert.AreEqual(expected, actual);
+        }
+        [TestCase(8, 0, "8 ")]
+        public void AddValueByIndexTest2(int value, int index, string expected)
+        {
+            ArrayList arrList = new ArrayList();
+            arrList.AddValueByIndex(value, index);
+            string actual = arrList.ToString();
+            Assert.AreEqual(expected, actual);
+        }
+        [TestCase(8, 0, "8 5 ")]
+        public void AddValueByIndexTest3(int value, int index, string expected)
+        {
+            ArrayList arrList = new ArrayList(5);
             arrList.AddValueByIndex(value, index);
             string actual = arrList.ToString();
             Assert.AreEqual(expected, actual);
@@ -103,6 +151,13 @@ namespace List.Tests
             int actual = arrList.GetValueByIndex(index);
             Assert.AreEqual(expected, actual);
         }
+        [TestCase(0, 3)]
+        public void GetValueByIndexTest2(int index, int expected)
+        {
+            ArrayList arrList = new ArrayList(3);
+            int actual = arrList.GetValueByIndex(index);
+            Assert.AreEqual(expected, actual);
+        }
 
         //12.  первый индекс по значению
         [TestCase(2, 1)]
@@ -132,12 +187,27 @@ namespace List.Tests
             string actual = arrList.ToString();
             Assert.AreEqual(expected, actual);
         }
+        [TestCase("8 ")]
+        public void ReversTest2(string expected)
+        {
+            ArrayList arrList = new ArrayList(8);
+            arrList.Revers();
+            string actual = arrList.ToString();
+            Assert.AreEqual(expected, actual);
+        }
 
         //15.  поиск значения максимального элемента
         [TestCase(5)]
         public void FindMaxValueTest(int expected)
         {
             ArrayList arrList = new ArrayList(new int[] { 1, 2, 3, 4, 5 });            
+            int actual = arrList.FindMaxValue();
+            Assert.AreEqual(expected, actual);
+        }
+        [TestCase(9)]
+        public void FindMaxValueTest2(int expected)
+        {
+            ArrayList arrList = new ArrayList(9);
             int actual = arrList.FindMaxValue();
             Assert.AreEqual(expected, actual);
         }
@@ -150,6 +220,13 @@ namespace List.Tests
             int actual = arrList.FindMinValue();
             Assert.AreEqual(expected, actual);
         }
+        [TestCase(7)]
+        public void FindMinValueTest2(int expected)
+        {
+            ArrayList arrList = new ArrayList(7);
+            int actual = arrList.FindMinValue();
+            Assert.AreEqual(expected, actual);
+        }
 
         //17. метод поиск индекс максимального элемента
         [TestCase(2)]
@@ -159,12 +236,26 @@ namespace List.Tests
             int actual = arrList.FindIndexMaxValue();
             Assert.AreEqual(expected, actual);
         }
+        [TestCase(0)]
+        public void FindIndexMaxValueTest2(int expected)
+        {
+            ArrayList arrList = new ArrayList(7);
+            int actual = arrList.FindIndexMaxValue();
+            Assert.AreEqual(expected, actual);
+        }
 
         //18.  поиск индекс минимального элемента
         [TestCase(4)]
         public void FindIndexMinValueTest(int expected)
         {
             ArrayList arrList = new ArrayList(new int[] { 1, 3, 9, 5, 0 });
+            int actual = arrList.FindIndexMinValue();
+            Assert.AreEqual(expected, actual);
+        }
+        [TestCase(0)]
+        public void FindIndexMinValueTest2(int expected)
+        {
+            ArrayList arrList = new ArrayList(2);
             int actual = arrList.FindIndexMinValue();
             Assert.AreEqual(expected, actual);
         }
@@ -178,12 +269,28 @@ namespace List.Tests
             string actual = arrList.ToString();
             Assert.AreEqual(expected, actual);
         }
+        [TestCase("34 ")]
+        public void SortAscendingTest2(string expected)
+        {
+            ArrayList arrList = new ArrayList(34);
+            arrList.SortAscending();
+            string actual = arrList.ToString();
+            Assert.AreEqual(expected, actual);
+        }
 
         //20.  сортировка по убыванию
         [TestCase("5 4 3 2 1 ")]
         public void SortDescendingTest(string expected)
         {
             ArrayList arrList = new ArrayList(new int[] { 4, 3, 1, 5, 2 });
+            arrList.SortDescending();
+            string actual = arrList.ToString();
+            Assert.AreEqual(expected, actual);
+        }
+        [TestCase("25 ")]
+        public void SortDescendingTest2(string expected)
+        {
+            ArrayList arrList = new ArrayList(25);
             arrList.SortDescending();
             string actual = arrList.ToString();
             Assert.AreEqual(expected, actual);
