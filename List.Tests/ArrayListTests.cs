@@ -144,18 +144,18 @@ namespace List.Tests
         }
 
         //11.  доступ по индексу 
-        [TestCase(2, 3)]
-        public void GetValueByIndexTest(int index, int expected)
+        [TestCase(3)]
+        public void GetValueByIndexTest(int expected)
         {
             ArrayList arrList = new ArrayList(new int[] { 1, 2, 3, 4, 5 });
-            int actual = arrList.GetValueByIndex(index);
+            int actual = arrList[2];
             Assert.AreEqual(expected, actual);
         }
-        [TestCase(0, 3)]
-        public void GetValueByIndexTest2(int index, int expected)
+        [TestCase(3)]
+        public void GetValueByIndexTest2(int expected)
         {
             ArrayList arrList = new ArrayList(3);
-            int actual = arrList.GetValueByIndex(index);
+            int actual = arrList[0];
             Assert.AreEqual(expected, actual);
         }
 
@@ -169,11 +169,11 @@ namespace List.Tests
         }
 
         //13. изменение по индексу
-        [TestCase(2, 1, "1 2 1 4 5 ")]
-        public void ChangeByIndexTest(int index, int value, string expected)
+        [TestCase("1 2 1 4 5 ")]
+        public void ChangeByIndexTest(string expected)
         {
             ArrayList arrList = new ArrayList(new int[] { 1, 2, 3, 4, 5 });
-            arrList.ChangeByIndex(index, value);
+            arrList[2]=1;
             string actual = arrList.ToString();
             Assert.AreEqual(expected, actual);
         }
@@ -316,6 +316,45 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        //24.  добавление списка (вашего самодельного) в конец
+        [TestCase(new int[] { 3, 3, 3, 2 }, "3 5 6 8 2 1 3 3 3 2 ")]
+        public void AddListToTheEndTest(int[] value, string expected)
+        {
+            ArrayList arrList = new ArrayList(new int[] { 3, 5, 6, 8, 2, 1 });
+            arrList.AddValueToTheEnd(value);
+            string actual = arrList.ToString();
+            Assert.AreEqual(expected, actual);
+        }
 
+        //25.  добавление списка в начало
+        [TestCase(new int[] { 3, 3, 3, 2 }, "3 3 3 2 3 5 6 8 2 1 ")]
+        public void AddListToTheBeginTest(int[] value, string expected)
+        {
+            ArrayList arrList = new ArrayList(new int[] { 3, 5, 6, 8, 2, 1 });
+            arrList.AddValueToTheBegin(value);
+            string actual = arrList.ToString();
+            Assert.AreEqual(expected, actual);
+        }
+
+        /*
+        //25.  добавление списка в начало
+        [TestCase(new int[] { 1, 2, 3 }, "1 2 3 4 5 ")]
+        public void AddListToTheBeginTest(int[] value, string expected)
+        {
+            ArrayList arrList = new ArrayList(new int[] { 4, 5 });
+            arrList.AddValueToTheBegin(value);
+            string actual = arrList.ToString();
+            Assert.AreEqual(expected, actual);
+        }
+        */
+        //26.  добавление списка по индексу
+        [TestCase(new int[] {3, 3, 3, 2}, 2, "3 5 3 3 3 2 6 8 2 1 ")]
+        public void AddListByIndexTest(int[] value, int index, string expected)
+        {
+            ArrayList arrList = new ArrayList(new int[] { 3, 5, 6, 8, 2, 1 });
+            arrList.AddValueByIndex(value, index);
+            string actual = arrList.ToString();
+            Assert.AreEqual(expected, actual);
+        }       
     }
 }
