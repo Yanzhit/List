@@ -41,7 +41,24 @@ namespace List
             }
             return s;
         }
-
+        /*
+        public override bool Equals(object obj)
+        {
+            ArrayList arrayList = (ArrayList)obj;
+            if (Length!=arrayList.Length)
+            {
+                return false;
+            }
+            for (int i=0; i<Length; i++)
+            {
+                if (_array[i]!=arrayList._array[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        */
         //1. метод добавление значения в конец
         public void AddValueToTheEnd(int value)
         {
@@ -57,6 +74,10 @@ namespace List
         //3. метод добавление значения по индексу
         public void AddValueByIndex(int value, int index)
         {
+            if (index > Length)
+            {
+                throw new IndexOutOfRangeException();
+            }
             if (Length == _array.Length)
             {
                 UpSize();
@@ -72,18 +93,30 @@ namespace List
         //4. метод удаление из конца одного элемента
         public void RemoveOneElementFromTheEnd()
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             RemoveOneElementByIndex(Length);
         }
 
         //5. метод удаление из начала одного элемента
         public void RemoveOneElementFromTheBegin()
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             RemoveOneElementByIndex(0);
         }
 
         //6. метод удаление по индексу одного элемента
         public void RemoveOneElementByIndex(int index)
         {
+            if (Length==0)
+            {
+                throw new ArgumentNullException();
+            }
             if (index > Length)
             {
                 throw new IndexOutOfRangeException();
@@ -102,21 +135,45 @@ namespace List
         //7. удаление из конца N элементов
         public void RemoveNElementsFromTheEnd(int n)
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
+            if (n > Length)
+            {
+                throw new ArgumentException();
+            }
             RemoveByIndexNElements(Length-1, n);
         }
 
         //8.удаление из начала N элементов
         public void RemoveNElementsFromTheBegin(int n)
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
+            if (n > Length)
+            {
+                throw new ArgumentException();
+            }
             RemoveByIndexNElements(0, n);
         }
 
         //9.удаление по индексу N элементов
         public void RemoveByIndexNElements(int index, int n)
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             if (index > Length)
             {
                 throw new IndexOutOfRangeException();
+            }
+            if (n > Length)
+            {
+                throw new ArgumentException();
             }
             for (int i = index; (i+n) < Length; i++)
             {
@@ -135,6 +192,10 @@ namespace List
         {
             get
             {
+                if (Length == 0)
+                {
+                    throw new ArgumentNullException();
+                }
                 if (index > Length)
                 {
                     throw new IndexOutOfRangeException();
@@ -165,6 +226,10 @@ namespace List
         //12. метод первый индекс по значению
         public int GetIndexByValue(int value)
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             for (int i = 0; i < Length; i++)
             {
                 if (_array[i] == value)
@@ -178,6 +243,10 @@ namespace List
         //14. метод реверс (123 -> 321)
         public void Revers()
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             for (int i = 0; i < Length / 2; i++)
             {
                 int tmp;
@@ -190,6 +259,10 @@ namespace List
         //15. метод поиск значения максимального элемента
         public int FindMaxValue()
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             int max = _array[0];
             for (int i = 1; i < Length; i++)
             {
@@ -204,6 +277,10 @@ namespace List
         //16. метод поиск значения минимального элемента
         public int FindMinValue()
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             int min = _array[0];
             for (int i = 1; i < Length; i++)
             {
@@ -218,18 +295,68 @@ namespace List
         //17. метод поиск индекс максимального элемента
         public int FindIndexMaxValue()
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             return GetIndexByValue(FindMaxValue());
         }
 
         //18. метод поиск индекс минимального элемента
         public int FindIndexMinValue()
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             return GetIndexByValue(FindMinValue());
         }
 
         //19. метод сортировка по возрастанию
+        public int[] SortAscending(int leftIndex, int rightIndex)
+        {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
+            int i = leftIndex, j = rightIndex, mid=_array[(i+j)/2], tmp ;
+            do
+            {
+                while (_array[i] < mid)
+                {
+                    i++;
+                }
+                while (mid < _array[j])
+                {
+                    j--;
+                }
+                if (i <= j)
+                {
+                    tmp = _array[i];
+                    _array[i] = _array[j];
+                    _array[j] = tmp;
+                    i++;
+                    j--;
+                }
+            }
+            while (i <= j);
+            if (leftIndex < j)
+            {
+                SortAscending(leftIndex, j);
+            }
+            if (i < rightIndex)
+            {
+                SortAscending(i, rightIndex);
+            }
+            return _array;
+        }
+        /*
         public int[] SortAscending()
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             int tmp;
             for (int i = 0; i < Length; i++)
             {
@@ -245,24 +372,78 @@ namespace List
             }
             return _array;
         }
-
+        */
         //20. метод сортировка по убыванию
+        public int[] SortDescending(int leftIndex, int rightIndex)
+        {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
+            int i = leftIndex, j = rightIndex, mid = _array[(i + j) / 2], tmp;
+            do
+            {
+                while (_array[i] > mid)
+                {
+                    i++;
+                }
+                while (mid > _array[j])
+                {
+                    j--;
+                }
+                if (i <= j)
+                {
+                    tmp = _array[i];
+                    _array[i] = _array[j];
+                    _array[j] = tmp;
+                    i++;
+                    j--;
+                }
+            }
+            while (i <= j);
+            if (leftIndex < j)
+            {
+                SortDescending(leftIndex, j);
+            }
+            if (i < rightIndex)
+            {
+                SortDescending(i, rightIndex);
+            }
+            return _array;
+        }
+        /*
         public int[] SortDescending()
         {
             SortAscending();
             Revers();
             return _array;
         }
-
+        */
         //21. метод удаление по значению первого (?вернуть индекс)
         public void RemoveByValueOne(int value)
         {
-            RemoveOneElementByIndex(GetIndexByValue(value));
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
+            if (GetIndexByValue(value) != -1)
+            {
+                RemoveOneElementByIndex(GetIndexByValue(value));
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+                
         }
 
         //22. метод удаление по значению всех (?вернуть кол-во)
         public void RemoveByValueAll(int value)
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             for (int i = 0; i < Length; i++)
             {
                 if (_array[i] == value)
@@ -273,38 +454,38 @@ namespace List
         }
 
         //24. метод добавление списка (вашего самодельного) в конец
-        public void AddValueToTheEnd(int[] value)
+        public void AddValueToTheEnd(ArrayList arrList)
         {
-            AddValueByIndex(value, Length);
+            AddValueByIndex(arrList, Length);
         }
 
         //25. метод добавление списка в начало
-        public void AddValueToTheBegin(int[] value)
+        public void AddValueToTheBegin(ArrayList arrList)
         {
-            AddValueByIndex(value, 0);
+            AddValueByIndex(arrList, 0);
         }
-
+      
         //26. метод добавление списка по индексу
-        public void AddValueByIndex(int[] value, int index)
+        public void AddValueByIndex(ArrayList arrList, int index)
         {
-            int newLength = value.Length;
-            while (Length + newLength >= _array.Length)
+            int newLength = Length + arrList.Length;
+            while (newLength >= _array.Length)
             {
                 UpSize();
             }
-            Console.WriteLine(_array.Length);
+
             for (int i = Length; i > index; i--)
             {
-                _array[i + newLength - 1] = _array[i - 1];
-                Console.WriteLine($"{ i + newLength - 1 }  {_array[i - 1]} ");
+                _array[i + arrList.Length - 1] = _array[i - 1];
             }
-            for (int i = 0; i < newLength; i++)
+
+            Length = Length + arrList.Length;
+            
+            for (int i = 0; i < arrList.Length; i++)
             {
-                AddValueByIndex(value[i], i+index);
-                Console.WriteLine($"{ value[i] }  {i + index} ");
+                _array[i + index] = arrList[i];
             }
         }
-
 
         private void UpSize() // увеличение длины массива
         {
