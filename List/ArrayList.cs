@@ -41,7 +41,7 @@ namespace List
             }
             return s;
         }
-        /*
+        
         public override bool Equals(object obj)
         {
             ArrayList arrayList = (ArrayList)obj;
@@ -58,7 +58,7 @@ namespace List
             }
             return true;
         }
-        */
+        
         //1. метод добавление значения в конец
         public void AddValueToTheEnd(int value)
         {
