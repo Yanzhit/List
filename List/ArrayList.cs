@@ -13,14 +13,14 @@ namespace List
         public ArrayList()
         {
             Length = 0;                    //длина пользов
-            _array = new int[10];          // реальная длина массива
+            _array = new int[1];           // реальная длина массива
         }
 
         // конструктор на основе одного элемента
         public ArrayList(int value)
         {
             Length = 1;
-            _array = new int[10];
+            _array = new int[2];
             _array[0] = value;
         }
 
@@ -29,36 +29,36 @@ namespace List
         {
             Length = value.Length;
             _array = value;
-            //UpSize();
+            UpSize();
         }
 
         public override string ToString()
         {
             string s = "";
-            for (int i=0; i < Length; i++)
+            for (int i = 0; i < Length; i++)
             {
                 s += _array[i] + " ";
             }
             return s;
         }
-        
+
         public override bool Equals(object obj)
         {
             ArrayList arrayList = (ArrayList)obj;
-            if (Length!=arrayList.Length)
+            if (Length != arrayList.Length)
             {
                 return false;
             }
-            for (int i=0; i<Length; i++)
+            for (int i = 0; i < Length; i++)
             {
-                if (_array[i]!=arrayList._array[i])
+                if (_array[i] != arrayList._array[i])
                 {
                     return false;
                 }
             }
             return true;
         }
-        
+
         //1. метод добавление значения в конец
         public void AddValueToTheEnd(int value)
         {
@@ -78,7 +78,7 @@ namespace List
             {
                 throw new IndexOutOfRangeException();
             }
-            if (Length == _array.Length)
+            if (Length >= _array.Length)
             {
                 UpSize();
             }
@@ -113,7 +113,7 @@ namespace List
         //6. метод удаление по индексу одного элемента
         public void RemoveOneElementByIndex(int index)
         {
-            if (Length==0)
+            if (Length == 0)
             {
                 throw new ArgumentNullException();
             }
@@ -121,12 +121,12 @@ namespace List
             {
                 throw new IndexOutOfRangeException();
             }
-            for (int i = index; i < Length-1; i++)
+            for (int i = index; i < Length - 1; i++)
             {
                 _array[i] = _array[i + 1];
             }
             Length--;
-            if (Length <= (_array.Length / 2))
+            if (Length < (_array.Length / 2))
             {
                 DownSize();
             }
@@ -143,7 +143,7 @@ namespace List
             {
                 throw new ArgumentException();
             }
-            RemoveByIndexNElements(Length-1, n);
+            RemoveByIndexNElements(Length - 1, n);
         }
 
         //8.удаление из начала N элементов
@@ -175,12 +175,12 @@ namespace List
             {
                 throw new ArgumentException();
             }
-            for (int i = index; (i+n) < Length; i++)
+            for (int i = index; (i + n) < Length; i++)
             {
                 _array[i] = _array[i + n];
             }
             Length -= n;
-            if (Length <= (_array.Length / 2))
+            if (Length < (_array.Length / 2))
             {
                 DownSize();
             }
@@ -252,7 +252,7 @@ namespace List
                 int tmp;
                 tmp = _array[i];
                 _array[i] = _array[Length - i - 1];
-                _array[Length - i - 1 ] = tmp;
+                _array[Length - i - 1] = tmp;
             }
         }
 
@@ -319,7 +319,7 @@ namespace List
             {
                 throw new ArgumentNullException();
             }
-            int i = leftIndex, j = rightIndex, mid=_array[(i+j)/2], tmp ;
+            int i = leftIndex, j = rightIndex, mid = _array[(i + j) / 2], tmp;
             do
             {
                 while (_array[i] < mid)
@@ -434,7 +434,7 @@ namespace List
             {
                 throw new ArgumentException();
             }
-                
+
         }
 
         //22. метод удаление по значению всех (?вернуть кол-во)
@@ -464,7 +464,7 @@ namespace List
         {
             AddValueByIndex(arrList, 0);
         }
-      
+
         //26. метод добавление списка по индексу
         public void AddValueByIndex(ArrayList arrList, int index)
         {
@@ -480,7 +480,7 @@ namespace List
             }
 
             Length = Length + arrList.Length;
-            
+
             for (int i = 0; i < arrList.Length; i++)
             {
                 _array[i + index] = arrList[i];

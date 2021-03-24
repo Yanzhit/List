@@ -10,37 +10,9 @@ namespace List
         private Node _root;
         private Node _tail;
 
-        public int this[int index]
-        {
-            get
-            {
-                if (index > Length)
-                {
-                    throw new IndexOutOfRangeException();
-                }
-                Node current = _root;
-                for (int i=1; i<=index; i++)
-                {
-                    current = current.Next;
-                }
-                //GetNodeByIndex(index);
-                return current.Values;
-            }
-            set
-            {
-                Node current = _root;
-                for (int i = 1; i <= index; i++)
-                {
-                    current = current.Next;
-                }
-                //GetNodeByIndex(index);
-                current.Values = value;
-            }
-        }
-
         public override string ToString()
         {
-            if (Length!=0)
+            if (Length != 0)
             {
                 Node current = _root;
                 string s = current.Values + " ";
@@ -57,11 +29,11 @@ namespace List
             }
         }
 
-        public override bool Equals (object obj)
+        public override bool Equals(object obj)
         {
             LinkedList list = (LinkedList)obj;
 
-            if (this.Length!=list.Length)
+            if (this.Length != list.Length)
             {
                 return false;
             }
@@ -92,7 +64,7 @@ namespace List
             _root = null;
             _tail = null;
         }
-        
+
         // конструктор на основе одного элемента
         public LinkedList(int values)
         {
@@ -110,11 +82,11 @@ namespace List
             }
             Length = values.Length;
 
-            if (values.Length!=0)
+            if (values.Length != 0)
             {
                 _root = new Node(values[0]);
                 _tail = _root;
-                for (int i=1; i<values.Length; i++)
+                for (int i = 1; i < values.Length; i++)
                 {
                     _tail.Next = new Node(values[i]);
                     _tail = _tail.Next;
@@ -148,11 +120,7 @@ namespace List
         public void AddValueByIndex(int value, int index)
         {
             Length++;
-            Node current = _root;
-            for (int i = 1; i < index; i++)
-            {
-                current = current.Next;
-            }
+            Node current = GetNodeByIndex(index - 1);
 
             Node tmp = new Node(value);
             tmp.Next = current.Next;
@@ -163,10 +131,11 @@ namespace List
         public void RemoveOneElementFromTheEnd()
         {
             Node current = _root;
-            for (int i = 1; i < Length-1; i++)
+            for (int i = 1; i < Length - 1; i++)
             {
                 current = current.Next;
-            }            
+            }
+            //Node current = GetNodeByIndex(Length - 1);
             current.Next = null;
             _tail = current;
             Length--;
@@ -182,7 +151,7 @@ namespace List
         //6. метод удаление по индексу одного элемента
         public void RemoveOneElementByIndex(int index)
         {
-            Node current = GetNodeByIndex(index-1);
+            Node current = GetNodeByIndex(index - 1);
             current.Next = current.Next.Next;
             Length--;
         }
@@ -201,7 +170,7 @@ namespace List
             Node current = GetNodeByIndex(Length - n - 1);
             current.Next = null;
             _tail = current;
-            Length--;
+            Length -= n;
         }
 
         //8.удаление из начала N элементов
@@ -216,7 +185,7 @@ namespace List
                 throw new ArgumentException();
             }
             _root = GetNodeByIndex(n);
-            Length--;
+            Length -= n;
         }
 
         //9.удаление по индексу N элементов
@@ -234,11 +203,133 @@ namespace List
             {
                 throw new ArgumentException();
             }
-            Node current = GetNodeByIndex(index - 1); 
+            Node current = GetNodeByIndex(index - 1);
             Node newcurrent = GetNodeByIndex(index + n - 1);
-            current.Next= newcurrent.Next;
-            Length--;
+            current.Next = newcurrent.Next;
+            Length -= n;
         }
+
+        //11. метод доступ по индексу 
+        //13. метод изменение по индексу
+        public int this[int index]
+        {
+            get
+            {
+                if (index > Length)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+                Node current = GetNodeByIndex(index);
+                return current.Values;
+            }
+            set
+            {
+                Node current = GetNodeByIndex(index);
+                current.Values = value;
+            }
+        }
+
+        //12. метод первый индекс по значению
+        public int GetIndexByValue(int value)
+        {
+            Node current = _root;
+            for (int i = 0; i < Length; i++)
+            {
+                if (current.Values == value)
+                {
+                    return i;
+                }
+                current = current.Next;
+            }
+            return -1;
+        }
+
+        //14. метод реверс (123 -> 321)
+        public void Revers()
+        {
+            Node current = _root;
+            Node tmp1 = null;
+            Node tmp2 = null;
+
+            while (!(current is null))
+            {
+                tmp2 = current.Next;
+                current.Next = tmp1;
+                tmp1 = current;
+                current = tmp2;
+            }
+            _root = tmp1;
+        }
+
+        //15. метод поиск значения максимального элемента
+        public int FindMaxValue()
+        {
+            int max = _root.Values;
+            Node current = _root;
+            for (int i = 1; i <= Length; i++)
+            {
+                if (max < current.Values)
+                {
+                    max = current.Values;
+                }
+                current = current.Next;
+            }
+            return max;
+        }
+
+        //16. метод поиск значения минимального элемента
+        public int FindMinValue()
+        {
+            int min = _root.Values;
+            Node current = _root;
+            for (int i = 1; i <= Length; i++)
+            {
+                if (min > current.Values)
+                {
+                    min = current.Values;
+                }
+                current = current.Next;
+            }
+            return min;
+        }
+
+
+        //17. метод поиск индекс максимального элемента
+        public int FindIndexMaxValue()
+        {
+            int max = _root.Values, indexMax=0;
+            Node current = _root;
+            for (int i = 0; i < Length; i++)
+            {
+                if (max < current.Values)
+                {
+                    max = current.Values;
+                    indexMax = i;
+                }
+                current = current.Next;
+            }
+            return indexMax;
+        }
+
+        //18. метод поиск индекс минимального элемента
+        public int FindIndexMinValue()
+        {
+            int min = _root.Values, indexMin = 0;
+            Node current = _root;
+            for (int i = 0; i < Length; i++)
+            {
+                if (min > current.Values)
+                {
+                    min = current.Values;
+                    indexMin = i;
+                }
+                current = current.Next;
+            }
+            return indexMin;
+        }
+
+
+
 
         private Node GetNodeByIndex(int index)
         {
