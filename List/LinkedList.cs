@@ -328,6 +328,59 @@ namespace List
             return indexMin;
         }
 
+        //19. метод сортировка по возрастанию
+        //public void SortAscending()
+        //{
+
+        //}
+
+        //21. метод удаление по значению первого (?вернуть индекс)
+        public void RemoveByValueOne(int value)
+        {
+            RemoveOneElementByIndex(GetIndexByValue(value));
+        }
+
+        //22. метод удаление по значению всех (?вернуть кол-во)
+        public void RemoveByValueAll(int value)
+        {
+            Node current = _root;
+            int i = 0;
+            while (i < Length)
+            {
+                if (current.Values == value)
+                {
+                    RemoveOneElementByIndex(i);
+                    i--;
+                }
+                current = current.Next;
+                i++;
+            }
+        }
+
+        //24. метод добавление списка (вашего самодельного) в конец
+        public void AddValueToTheEnd(LinkedList linkedList)
+        {
+            Length = Length + linkedList.Length;
+            _tail.Next = linkedList._root;
+            _tail = linkedList._tail;
+        }
+
+        //25. метод добавление списка в начало
+        public void AddValueToTheBegin(LinkedList linkedList)
+        {
+            Length = Length + linkedList.Length;
+            linkedList._tail.Next = _root;
+            _root = linkedList._root;
+        }
+
+        //26. метод добавление списка по индексу
+        public void AddValueByIndex(LinkedList linkedList, int index)
+        {
+            Length = Length + linkedList.Length;
+            Node current = GetNodeByIndex(index - 1);
+            linkedList._tail.Next = current.Next;
+            current.Next = linkedList._root;
+        }
 
 
 

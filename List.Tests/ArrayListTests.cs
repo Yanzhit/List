@@ -761,7 +761,6 @@ namespace List.Tests
             Assert.AreEqual(arrList, arrList2);
         }
 
-
         //26.  добавление списка по индексу
         [TestCase(new int[] { 3, 3, 3, 2 }, 2, new int[] { 3, 5, 3, 3, 3, 2, 6, 8, 2, 1 })]
         public void AddListByIndexTest(int[] value, int index, int[] expected)

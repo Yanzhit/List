@@ -204,6 +204,10 @@ namespace List
             }
             set
             {
+                if (index > Length)
+                {
+                    throw new IndexOutOfRangeException();
+                }
                 _array[index] = value;
             }
         }
@@ -299,7 +303,17 @@ namespace List
             {
                 throw new ArgumentNullException();
             }
-            return GetIndexByValue(FindMaxValue());
+            //return GetIndexByValue(FindMaxValue());
+            int max = _array[0], indexMax=0;
+            for (int i = 1; i < Length; i++)
+            {
+                if (max < _array[i])
+                {
+                    max = _array[i];
+                    indexMax = i;
+                }
+            }
+            return indexMax;
         }
 
         //18. метод поиск индекс минимального элемента
@@ -309,7 +323,17 @@ namespace List
             {
                 throw new ArgumentNullException();
             }
-            return GetIndexByValue(FindMinValue());
+            //return GetIndexByValue(FindMinValue());
+            int min = _array[0], indexMin=0;
+            for (int i = 1; i < Length; i++)
+            {
+                if (min > _array[i])
+                {
+                    min = _array[i];
+                    indexMin = i;
+                }
+            }
+            return indexMin;
         }
 
         //19. метод сортировка по возрастанию
@@ -411,14 +435,7 @@ namespace List
             }
             return _array;
         }
-        /*
-        public int[] SortDescending()
-        {
-            SortAscending();
-            Revers();
-            return _array;
-        }
-        */
+
         //21. метод удаление по значению первого (?вернуть индекс)
         public void RemoveByValueOne(int value)
         {
@@ -426,6 +443,7 @@ namespace List
             {
                 throw new ArgumentNullException();
             }
+
             if (GetIndexByValue(value) != -1)
             {
                 RemoveOneElementByIndex(GetIndexByValue(value));
@@ -434,7 +452,6 @@ namespace List
             {
                 throw new ArgumentException();
             }
-
         }
 
         //22. метод удаление по значению всех (?вернуть кол-во)
@@ -469,11 +486,18 @@ namespace List
         public void AddValueByIndex(ArrayList arrList, int index)
         {
             int newLength = Length + arrList.Length;
+            int[] tmpArray = new int[newLength];
+            for (int i = 0; i < _array.Length; i++)
+            {
+                tmpArray[i] = _array[i];
+            }
+            _array = tmpArray;
+            /*
             while (newLength >= _array.Length)
             {
                 UpSize();
             }
-
+            */
             for (int i = Length; i > index; i--)
             {
                 _array[i + arrList.Length - 1] = _array[i - 1];

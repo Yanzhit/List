@@ -176,6 +176,58 @@ namespace List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        //21.  удаление по значению первого (?вернуть индекс)
+        [TestCase(3, new int[] { 4, 1, 3, 2 })]
+        public void RemoveByValueOneTest(int value, int[] expected)
+        {
+            LinkedList linkedList = new LinkedList(new int[] { 4, 3, 1, 3, 2 });
+            LinkedList linkedList2 = new LinkedList(expected);
+            linkedList.RemoveByValueOne(value);
+            Assert.AreEqual(linkedList, linkedList2);
+        }
+
+        //22.  удаление по значению всех (?вернуть кол-во)
+        [TestCase(3, new int[] { 4, 1, 2 })]
+        public void RemoveByValueAllTest(int value, int[] expected)
+        {
+            LinkedList linkedList = new LinkedList(new int[] { 4, 3, 1, 3, 2 });
+            LinkedList linkedList2 = new LinkedList(expected);
+            linkedList.RemoveByValueAll(value);
+            Assert.AreEqual(linkedList, linkedList2);
+        }
+
+        //24.  добавление списка (вашего самодельного) в конец
+        [TestCase(new int[] { 3, 3, 3, 2 }, new int[] { 3, 5, 6, 8, 2, 1, 3, 3, 3, 2 })]
+        public void AddListToTheEndTest(int[] value, int[] expected)
+        {
+            LinkedList linkedList = new LinkedList(new int[] { 3, 5, 6, 8, 2, 1 });
+            LinkedList linkedList2 = new LinkedList(expected);
+            LinkedList linkedList3 = new LinkedList(value);
+            linkedList.AddValueToTheEnd(linkedList3);
+            Assert.AreEqual(linkedList, linkedList2);
+        }
+
+        //25.  добавление списка в начало
+        [TestCase(new int[] { 3, 3, 3, 2 }, new int[] { 3, 3, 3, 2, 3, 5, 6, 8, 2, 1 })]
+        public void AddListToTheBeginTest(int[] value, int[] expected)
+        {
+            LinkedList linkedList = new LinkedList(new int[] { 3, 5, 6, 8, 2, 1 });
+            LinkedList linkedList2 = new LinkedList(expected);
+            LinkedList linkedList3 = new LinkedList(value);
+            linkedList.AddValueToTheBegin(linkedList3);
+            Assert.AreEqual(linkedList, linkedList2);
+        }
+
+        //26.  добавление списка по индексу
+        [TestCase(new int[] { 3, 3, 3, 2 }, 2, new int[] { 3, 5, 3, 3, 3, 2, 6, 8, 2, 1 })]
+        public void AddListByIndexTest(int[] value, int index, int[] expected)
+        {
+            LinkedList linkedList = new LinkedList(new int[] { 3, 5, 6, 8, 2, 1 });
+            LinkedList linkedList2 = new LinkedList(expected);
+            LinkedList linkedList3 = new LinkedList(value);
+            linkedList.AddValueByIndex(linkedList3, index);
+            Assert.AreEqual(linkedList, linkedList2);
+        }
 
     }
 }
