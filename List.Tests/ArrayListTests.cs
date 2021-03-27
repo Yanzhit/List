@@ -118,7 +118,6 @@ namespace List.Tests
             Assert.AreEqual(arrList, arrList2);
         }
         //      удаление из конца одного элемента из списка  с одним элементом
-
         [TestCase()]
         public void RemoveOneElementFromTheEndTest2()
         {
@@ -129,8 +128,8 @@ namespace List.Tests
         }
 
         //      удаление из конца одного элемента из пустого списка
-        [TestCase(0)]
-        public void RemoveOneElementFromTheEnd_WhenListEmpty_ShouldException(int index)
+        [TestCase()]
+        public void RemoveOneElementFromTheEnd_WhenListEmpty_ShouldException()
         {
             ArrayList arrList = new ArrayList();
             try
@@ -154,20 +153,18 @@ namespace List.Tests
             arrList.RemoveOneElementFromTheBegin();
             Assert.AreEqual(arrList, arrList2);
         }
-        //      удаление из начала одного элемента из списка  с одним элементом
-        /*
-        [TestCase(null)]
-        public void RemoveOneElementFromTheBeginTest(string expected)
+        //      удаление из начала одного элемента из списка  с одним элементом       
+        [TestCase()]
+        public void RemoveOneElementFromTheBeginTest2()
         {
             ArrayList arrList = new ArrayList(5);
+            ArrayList arrList2 = new ArrayList();
             arrList.RemoveOneElementFromTheBegin();
-            string actual = arrList.ToString();
-            Assert.AreEqual(expected, actual);
-        }
-        */
+            Assert.AreEqual(arrList, arrList2);
+        }        
         //      удаление  из начала одного элемента из пустого списка
-        [TestCase(0)]
-        public void RemoveOneElementFromTheBegin_WhenListEmpty_ShouldException(int index)
+        [TestCase()]
+        public void RemoveOneElementFromTheBegin_WhenListEmpty_ShouldException()
         {
             ArrayList arrList = new ArrayList();
             try
@@ -191,17 +188,15 @@ namespace List.Tests
             arrList.RemoveOneElementByIndex(index);
             Assert.AreEqual(arrList, arrList2);
         }
-        /*
         //      удаление по индексу одного элемента из списка с одним элементом
-        [TestCase(0, "")]
-        public void RemoveOneElementByIndexFromListWithOneElementTest(int index, string expected)
+        [TestCase(0)]
+        public void RemoveOneElementByIndexFromListWithOneElementTest(int index)
         {
             ArrayList arrList = new ArrayList(8);
+            ArrayList arrList2 = new ArrayList();
             arrList.RemoveOneElementByIndex(index);
-            string actual = arrList.ToString();
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(arrList, arrList2);
         }
-        */
         //      удаление по индексу одного элемента из пустого списка
         [TestCase(0)]
         public void RemoveOneElementByIndex_WhenListEmpty_ShouldException(int index)
@@ -737,6 +732,21 @@ namespace List.Tests
             ArrayList arrList2 = new ArrayList(expected);
             arrList.RemoveByValueAll(value);
             Assert.AreEqual(arrList, arrList2);
+        }
+        //      проверка на пустой список
+        [TestCase(3)]
+        public void RemoveByValueAll_WhenListEmpty_ShouldException(int value)
+        {
+            ArrayList arrList = new ArrayList();
+            try
+            {
+                arrList.RemoveByValueAll(value);
+            }
+            catch
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
         }
 
         //24.  добавление списка (вашего самодельного) в конец

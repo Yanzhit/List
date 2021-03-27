@@ -102,58 +102,133 @@ namespace List
         //1. метод добавление значения в конец
         public void AddValueToTheEnd(int value)
         {
-            Length++;
-            _tail.Next = new Node(value);
-            _tail = _tail.Next;
+            if (Length != 0)
+            {
+                Length++;
+                _tail.Next = new Node(value);
+                _tail = _tail.Next;
+            }
+            else
+            {
+                AddValueToEmptyList(value);
+            }
         }
 
         //2. метод добавление значения в начало
         public void AddValueToTheBegin(int value)
         {
-            Length++;
-            Node tmp = new Node(value);
-            tmp.Next = _root;
-            _root = tmp;
+            if (Length != 0)
+            {
+                Length++;
+                Node tmp = new Node(value);
+                tmp.Next = _root;
+                _root = tmp;
+            }
+            else
+            {
+                AddValueToEmptyList(value);
+            }
         }
 
         //3. метод добавление значения по индексу
         public void AddValueByIndex(int value, int index)
         {
-            Length++;
-            Node current = GetNodeByIndex(index - 1);
+            if (index > Length)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            if (Length != 0 && Length != 1)
+            {
+                Length++;
+                Node current = GetNodeByIndex(index - 1);
 
-            Node tmp = new Node(value);
-            tmp.Next = current.Next;
-            current.Next = tmp;
+                Node tmp = new Node(value);
+                tmp.Next = current.Next;
+                current.Next = tmp;
+            }
+            else
+            {
+                if (Length == 0)
+                {
+                    AddValueToEmptyList(value);
+                }
+                else
+                {
+                    AddValueToTheBegin(value);
+                }                    
+            }
         }
 
         //4. метод удаление из конца одного элемента
         public void RemoveOneElementFromTheEnd()
         {
-            Node current = _root;
-            for (int i = 1; i < Length - 1; i++)
+            if (Length == 0)
             {
-                current = current.Next;
+                throw new ArgumentNullException();
             }
-            //Node current = GetNodeByIndex(Length - 1);
-            current.Next = null;
-            _tail = current;
-            Length--;
+            if (Length != 1)
+            {
+                Node current = _root;
+                for (int i = 1; i < Length - 1; i++)
+                {
+                    current = current.Next;
+                }
+                //Node current = GetNodeByIndex(Length - 1);
+                current.Next = null;
+                _tail = current;
+                Length--;
+            }
+            else
+            {
+                Length = 0;
+                _root = null;
+                _tail = null;
+            }
         }
 
         //5. метод удаление из начала одного элемента
         public void RemoveOneElementFromTheBegin()
         {
-            _root = _root.Next;
-            Length--;
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
+            if (Length != 1)
+            {
+                _root = _root.Next;
+                Length--;
+            }
+            else
+            {
+                Length = 0;
+                _root = null;
+                _tail = null;
+            }
         }
 
         //6. метод удаление по индексу одного элемента
         public void RemoveOneElementByIndex(int index)
         {
-            Node current = GetNodeByIndex(index - 1);
-            current.Next = current.Next.Next;
-            Length--;
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
+            if (index > Length)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            if (Length != 1)
+            {
+                Node current = GetNodeByIndex(index - 1);
+                current.Next = current.Next.Next;
+                Length--;
+            }
+            else
+            {
+                Length = 0;
+                _root = null;
+                _tail = null;
+            }
         }
 
         //7. удаление из конца N элементов
@@ -167,10 +242,19 @@ namespace List
             {
                 throw new ArgumentException();
             }
-            Node current = GetNodeByIndex(Length - n - 1);
-            current.Next = null;
-            _tail = current;
-            Length -= n;
+            if (Length != 1)
+            {
+                Node current = GetNodeByIndex(Length - n - 1);
+                current.Next = null;
+                _tail = current;
+                Length -= n;
+            }
+            else
+            {
+                Length = 0;
+                _root = null;
+                _tail = null;
+            }
         }
 
         //8.удаление из начала N элементов
@@ -215,6 +299,10 @@ namespace List
         {
             get
             {
+                if (Length == 0)
+                {
+                    throw new ArgumentNullException();
+                }
                 if (index > Length)
                 {
                     throw new IndexOutOfRangeException();
@@ -224,6 +312,10 @@ namespace List
             }
             set
             {
+                if (index > Length)
+                {
+                    throw new IndexOutOfRangeException();
+                }
                 Node current = GetNodeByIndex(index);
                 current.Values = value;
             }
@@ -232,6 +324,10 @@ namespace List
         //12. метод первый индекс по значению
         public int GetIndexByValue(int value)
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             Node current = _root;
             for (int i = 0; i < Length; i++)
             {
@@ -247,6 +343,11 @@ namespace List
         //14. метод реверс (123 -> 321)
         public void Revers()
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
+
             Node current = _root;
             Node tmp1 = null;
             Node tmp2 = null;
@@ -264,6 +365,10 @@ namespace List
         //15. метод поиск значения максимального элемента
         public int FindMaxValue()
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             int max = _root.Values;
             Node current = _root;
             for (int i = 1; i <= Length; i++)
@@ -280,6 +385,10 @@ namespace List
         //16. метод поиск значения минимального элемента
         public int FindMinValue()
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             int min = _root.Values;
             Node current = _root;
             for (int i = 1; i <= Length; i++)
@@ -297,6 +406,10 @@ namespace List
         //17. метод поиск индекс максимального элемента
         public int FindIndexMaxValue()
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             int max = _root.Values, indexMax=0;
             Node current = _root;
             for (int i = 0; i < Length; i++)
@@ -314,6 +427,10 @@ namespace List
         //18. метод поиск индекс минимального элемента
         public int FindIndexMinValue()
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             int min = _root.Values, indexMin = 0;
             Node current = _root;
             for (int i = 0; i < Length; i++)
@@ -329,20 +446,68 @@ namespace List
         }
 
         //19. метод сортировка по возрастанию
-        //public void SortAscending()
-        //{
+        public void SortAscending()
+        {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
+            for (int i=1; i<Length; i++)
+            {
+                for (int j=i; j>0; j--)
+                {
+                    Node current1 = GetNodeByIndex(j - 1);
+                    Node current2 = GetNodeByIndex(j);
+                    if (current1.Values > current2.Values)
+                    {
+                        int tmp = current1.Values;
+                        current1.Values = current2.Values;
+                        current2.Values = tmp;
+                    }
+                }
+            }
+        }
 
-        //}
+        //20. метод сортировка по убыванию
+        public void SortDescending()
+        {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
+            for (int i = 1; i < Length; i++)
+            {
+                for (int j = i; j > 0; j--)
+                {
+                    Node current1 = GetNodeByIndex(j - 1);
+                    Node current2 = GetNodeByIndex(j);
+                    if (current1.Values < current2.Values)
+                    {
+                        int tmp = current1.Values;
+                        current1.Values = current2.Values;
+                        current2.Values = tmp;
+                    }
+                }
+            }
+        }
 
         //21. метод удаление по значению первого (?вернуть индекс)
         public void RemoveByValueOne(int value)
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             RemoveOneElementByIndex(GetIndexByValue(value));
         }
 
         //22. метод удаление по значению всех (?вернуть кол-во)
         public void RemoveByValueAll(int value)
         {
+            if (Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
             Node current = _root;
             int i = 0;
             while (i < Length)
@@ -383,7 +548,7 @@ namespace List
         }
 
 
-
+        // метод возвращающий Node по индексу
         private Node GetNodeByIndex(int index)
         {
             Node current = _root;
@@ -392,6 +557,15 @@ namespace List
                 current = current.Next;
             }
             return current;
+        }
+
+        // метод добавления значения в пустой список
+        private Node AddValueToEmptyList(int values)
+        {
+            Length = 1;
+            _root = new Node(values);
+            _tail = _root;
+            return _root;
         }
     }
 }
