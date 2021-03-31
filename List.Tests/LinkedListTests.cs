@@ -118,14 +118,14 @@ namespace List.Tests
             Assert.AreEqual(linkedList, linkedList2);
         }
         //      удаление из конца одного элемента из списка  с одним элементом
-        [TestCase()]
-        public void RemoveOneElementFromTheEndFromListWithOneElement()
-        {
-            LinkedList linkedList = new LinkedList(5);
-            LinkedList linkedList2 = new LinkedList();
-            linkedList.RemoveOneElementFromTheEnd();
-            Assert.AreEqual(linkedList, linkedList2);
-        }
+        //[TestCase()]
+        //public void RemoveOneElementFromTheEndFromListWithOneElement()
+        //{
+        //    LinkedList linkedList = new LinkedList(5);
+        //    LinkedList linkedList2 = new LinkedList();
+        //    linkedList.RemoveOneElementFromTheEnd();
+        //    Assert.AreEqual(linkedList, linkedList2);
+        //}
         //      удаление из конца одного элемента из пустого списка
         [TestCase()]
         public void RemoveOneElementFromTheEnd_WhenListEmpty_ShouldException()
@@ -153,14 +153,14 @@ namespace List.Tests
             Assert.AreEqual(linkedList, linkedList2);
         }
         //      удаление из начала одного элемента из списка  с одним элементом       
-        [TestCase()]
-        public void RemoveOneElementFromTheBeginTest2()
-        {
-            LinkedList linkedList = new LinkedList(5);
-            LinkedList linkedList2 = new LinkedList();
-            linkedList.RemoveOneElementFromTheBegin();
-            Assert.AreEqual(linkedList, linkedList2);
-        }
+        //[TestCase()]
+        //public void RemoveOneElementFromTheBeginTest2()
+        //{
+        //    LinkedList linkedList = new LinkedList(5);
+        //    LinkedList linkedList2 = new LinkedList();
+        //    linkedList.RemoveOneElementFromTheBegin();
+        //    Assert.AreEqual(linkedList, linkedList2);
+        //}
         //      удаление  из начала одного элемента из пустого списка
         [TestCase()]
         public void RemoveOneElementFromTheBegin_WhenListEmpty_ShouldException()
@@ -188,14 +188,14 @@ namespace List.Tests
             Assert.AreEqual(linkedList, linkedList2);
         }
         //      удаление по индексу одного элемента из списка с одним элементом
-        [TestCase(0)]
-        public void RemoveOneElementByIndexFromListWithOneElementTest(int index)
-        {
-            LinkedList linkedList = new LinkedList(8);
-            LinkedList linkedList2 = new LinkedList();
-            linkedList.RemoveOneElementByIndex(index);
-            Assert.AreEqual(linkedList, linkedList2);
-        }
+        //[TestCase()]
+        //public void RemoveOneElementByIndexFromListWithOneElementTest(int index)
+        //{
+        //    LinkedList linkedList = new LinkedList(8);
+        //    LinkedList linkedList2 = new LinkedList();
+        //    linkedList.RemoveOneElementByIndex(index);
+        //    Assert.AreEqual(linkedList, linkedList2);
+        //}
         //      удаление по индексу одного элемента из пустого списка
         [TestCase(0)]
         public void RemoveOneElementByIndex_WhenListEmpty_ShouldException(int index)
@@ -439,7 +439,7 @@ namespace List.Tests
 
         //14.  реверс (123 -> 321)
         [TestCase(new int[] { 5, 4, 3, 2, 1 })]
-        public void ReversArrayListTest(int[] expected)
+        public void ReversLinkedListTest(int[] expected)
         {
             LinkedList linkedList = new LinkedList(new int[] { 1, 2, 3, 4, 5 });
             LinkedList linkedList2 = new LinkedList(expected);

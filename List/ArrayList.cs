@@ -532,5 +532,10 @@ namespace List
             }
             _array = tmpArray;
         }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Length, _array);
+        }
     }
 }

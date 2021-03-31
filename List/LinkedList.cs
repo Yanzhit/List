@@ -166,24 +166,28 @@ namespace List
             {
                 throw new ArgumentNullException();
             }
-            if (Length != 1)
-            {
-                Node current = _root;
-                for (int i = 1; i < Length - 1; i++)
-                {
-                    current = current.Next;
-                }
-                //Node current = GetNodeByIndex(Length - 1);
-                current.Next = null;
-                _tail = current;
-                Length--;
-            }
-            else
-            {
-                Length = 0;
-                _root = null;
-                _tail = null;
-            }
+            //if (Length != 1)
+            //{
+            //    Node current = _root;
+            //    for (int i = 1; i < Length - 1; i++)
+            //    {
+            //        current = current.Next;
+            //    }
+            //    //Node current = GetNodeByIndex(Length - 1);
+            //    current.Next = null;
+            //    _tail = current;
+            //    Length--;
+            //}
+            //else
+            //{
+            //    Length = 0;
+            //    _root = null;
+            //    _tail = null;
+            //}
+            Node current = GetNodeByIndex(Length - 2);
+            current.Next = null;
+            _tail = current;
+            Length--;
         }
 
         //5. метод удаление из начала одного элемента
@@ -193,17 +197,19 @@ namespace List
             {
                 throw new ArgumentNullException();
             }
-            if (Length != 1)
-            {
-                _root = _root.Next;
-                Length--;
-            }
-            else
-            {
-                Length = 0;
-                _root = null;
-                _tail = null;
-            }
+            //if (Length != 1)
+            //{
+            //    _root = _root.Next;
+            //    Length--;
+            //}
+            //else
+            //{
+            //    Length = 0;
+            //    _root = null;
+            //    _tail = null;
+            //}
+            _root = _root.Next;
+            Length--;
         }
 
         //6. метод удаление по индексу одного элемента
@@ -217,18 +223,21 @@ namespace List
             {
                 throw new IndexOutOfRangeException();
             }
-            if (Length != 1)
-            {
-                Node current = GetNodeByIndex(index - 1);
-                current.Next = current.Next.Next;
-                Length--;
-            }
-            else
-            {
-                Length = 0;
-                _root = null;
-                _tail = null;
-            }
+            //if (Length != 1)
+            //{
+            //    Node current = GetNodeByIndex(index - 1);
+            //    current.Next = current.Next.Next;
+            //    Length--;
+            //}
+            //else
+            //{
+            //    Length = 0;
+            //    _root = null;
+            //    _tail = null;
+            //}
+            Node current = GetNodeByIndex(index - 1);
+            current.Next = current.Next.Next;
+            Length--;
         }
 
         //7. удаление из конца N элементов
@@ -242,19 +251,10 @@ namespace List
             {
                 throw new ArgumentException();
             }
-            if (Length != 1)
-            {
-                Node current = GetNodeByIndex(Length - n - 1);
-                current.Next = null;
-                _tail = current;
-                Length -= n;
-            }
-            else
-            {
-                Length = 0;
-                _root = null;
-                _tail = null;
-            }
+            Node current = GetNodeByIndex(Length - n - 1);
+            current.Next = null;
+            _tail = current;
+            Length -= n;
         }
 
         //8.удаление из начала N элементов
@@ -349,9 +349,17 @@ namespace List
             }
 
             Node current = _root;
+            //Node tmp = null;
             Node tmp1 = null;
             Node tmp2 = null;
-
+            //while (!(current is null))
+            //{
+            //    tmp = current.Next;
+            //    current.Next = tmp.Next;
+            //    tmp.Next = _root;
+            //    _root = tmp;
+            //}
+            //_tail = current;
             while (!(current is null))
             {
                 tmp2 = current.Next;
@@ -566,6 +574,11 @@ namespace List
             _root = new Node(values);
             _tail = _root;
             return _root;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Length, _root, _tail);
         }
     }
 }
