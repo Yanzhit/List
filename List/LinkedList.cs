@@ -41,20 +41,27 @@ namespace List
             Node currentThis = this._root;
             Node currentList = list._root;
 
-            while (!(currentThis.Next is null))
+            if ((currentThis is null) && (currentList is null))
             {
+                return true;
+            }
+            else
+            {
+                while (!(currentThis.Next is null))
+                {
+                    if (currentThis.Values != currentList.Values)
+                    {
+                        return false;
+                    }
+                    currentList = currentList.Next;
+                    currentThis = currentThis.Next;
+                }
                 if (currentThis.Values != currentList.Values)
                 {
                     return false;
                 }
-                currentList = currentList.Next;
-                currentThis = currentThis.Next;
+                return true;
             }
-            if (currentThis.Values != currentList.Values)
-            {
-                return false;
-            }
-            return true;
         }
 
         // конструктор пустой 
@@ -155,7 +162,7 @@ namespace List
                 else
                 {
                     AddValueToTheBegin(value);
-                }                    
+                }
             }
         }
 
@@ -166,28 +173,17 @@ namespace List
             {
                 throw new ArgumentNullException();
             }
-            //if (Length != 1)
-            //{
-            //    Node current = _root;
-            //    for (int i = 1; i < Length - 1; i++)
-            //    {
-            //        current = current.Next;
-            //    }
-            //    //Node current = GetNodeByIndex(Length - 1);
-            //    current.Next = null;
-            //    _tail = current;
-            //    Length--;
-            //}
-            //else
-            //{
-            //    Length = 0;
-            //    _root = null;
-            //    _tail = null;
-            //}
-            Node current = GetNodeByIndex(Length - 2);
-            current.Next = null;
-            _tail = current;
-            Length--;
+            if (Length != 1)
+            {
+                Node current = GetNodeByIndex(Length - 2);
+                current.Next = null;
+                _tail = current;
+                Length--;
+            }
+            else
+            {
+                EmptyList();
+            }
         }
 
         //5. метод удаление из начала одного элемента
@@ -197,19 +193,15 @@ namespace List
             {
                 throw new ArgumentNullException();
             }
-            //if (Length != 1)
-            //{
-            //    _root = _root.Next;
-            //    Length--;
-            //}
-            //else
-            //{
-            //    Length = 0;
-            //    _root = null;
-            //    _tail = null;
-            //}
-            _root = _root.Next;
-            Length--;
+            if (Length != 1)
+            {
+                _root = _root.Next;
+                Length--;
+            }
+            else
+            {
+                EmptyList();
+            }
         }
 
         //6. метод удаление по индексу одного элемента
@@ -223,21 +215,16 @@ namespace List
             {
                 throw new IndexOutOfRangeException();
             }
-            //if (Length != 1)
-            //{
-            //    Node current = GetNodeByIndex(index - 1);
-            //    current.Next = current.Next.Next;
-            //    Length--;
-            //}
-            //else
-            //{
-            //    Length = 0;
-            //    _root = null;
-            //    _tail = null;
-            //}
-            Node current = GetNodeByIndex(index - 1);
-            current.Next = current.Next.Next;
-            Length--;
+            if (Length != 1)
+            {
+                Node current = GetNodeByIndex(index - 1);
+                current.Next = current.Next.Next;
+                Length--;
+            }
+            else
+            {
+                EmptyList();
+            }
         }
 
         //7. удаление из конца N элементов
@@ -251,10 +238,17 @@ namespace List
             {
                 throw new ArgumentException();
             }
-            Node current = GetNodeByIndex(Length - n - 1);
-            current.Next = null;
-            _tail = current;
-            Length -= n;
+            if (Length != n)
+            {
+                Node current = GetNodeByIndex(Length - n - 1);
+                current.Next = null;
+                _tail = current;
+                Length -= n;
+            }
+            else
+            {
+                EmptyList();
+            }
         }
 
         //8.удаление из начала N элементов
@@ -268,8 +262,15 @@ namespace List
             {
                 throw new ArgumentException();
             }
-            _root = GetNodeByIndex(n);
-            Length -= n;
+            if (Length != n)
+            {
+                _root = GetNodeByIndex(n);
+                Length -= n;
+            }
+            else
+            {
+                EmptyList();
+            }
         }
 
         //9.удаление по индексу N элементов
@@ -287,10 +288,17 @@ namespace List
             {
                 throw new ArgumentException();
             }
-            Node current = GetNodeByIndex(index - 1);
-            Node newcurrent = GetNodeByIndex(index + n - 1);
-            current.Next = newcurrent.Next;
-            Length -= n;
+            if (Length != n)
+            {
+                Node current = GetNodeByIndex(index - 1);
+                Node newcurrent = GetNodeByIndex(index + n - 1);
+                current.Next = newcurrent.Next;
+                Length -= n;
+            }
+            else
+            {
+                EmptyList();
+            }
         }
 
         //11. метод доступ по индексу 
@@ -418,7 +426,7 @@ namespace List
             {
                 throw new ArgumentNullException();
             }
-            int max = _root.Values, indexMax=0;
+            int max = _root.Values, indexMax = 0;
             Node current = _root;
             for (int i = 0; i < Length; i++)
             {
@@ -460,9 +468,9 @@ namespace List
             {
                 throw new ArgumentNullException();
             }
-            for (int i=1; i<Length; i++)
+            for (int i = 1; i < Length; i++)
             {
-                for (int j=i; j>0; j--)
+                for (int j = i; j > 0; j--)
                 {
                     Node current1 = GetNodeByIndex(j - 1);
                     Node current2 = GetNodeByIndex(j);
@@ -574,6 +582,14 @@ namespace List
             _root = new Node(values);
             _tail = _root;
             return _root;
+        }
+
+        // метод пустой список
+        private void EmptyList()
+        {
+            Length = 0;
+            _root = null;
+            _tail = null;
         }
 
         public override int GetHashCode()
